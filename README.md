@@ -55,7 +55,7 @@ Robot controller esp32
 
 Сохранил в репозиторий в репозиторий
 
-````git push````
+````git push --set-upstream origin 20240210````
 
 Сделлал PR в GITHUB
 
