@@ -16,6 +16,9 @@ void IRAM_ATTR encoderLeftInterrupt(){
     if (encoderLeft != NULL) encoderLeft->inc();
 }
 
+unsigned long time(){
+     return micros(); // easy; did this one for you
+}
 
 void encodersInit(){
   encoderRigth = new Encoder();
@@ -41,6 +44,14 @@ long encoderReadLeft(){
 }
 long encoderReadRigth(){
    if (encoderRigth != NULL) return encoderRigth->read(); 
+   else return 0;
+}
+long encoderReadPosLeft() {
+   if (encoderLeft != NULL) return encoderLeft->readAndReset(); 
+   else return 0;
+}
+long encoderReadPosRigth() {
+   if (encoderRigth != NULL) return encoderRigth->readAndReset(); 
    else return 0;
 }
 

@@ -18,6 +18,12 @@ long Encoder::read(){
     return counter;
 }
 
+long Encoder::readAndReset(){
+    long ret_counter = counter;
+    counter = 0;
+    return ret_counter;
+}
+
 void Encoder::reset(){
     counter = 0;
 }

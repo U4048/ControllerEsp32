@@ -14,6 +14,7 @@ class Encoder {
      Encoder();
      void setup(uint8_t pinA,  uint8_t pinB, void (*intRoutine)(void));
      long read();
+     long readAndReset();
      void reset();
      void inc();
      ~Encoder();
