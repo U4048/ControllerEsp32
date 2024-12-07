@@ -47,15 +47,30 @@ long encoderReadRigth(){
 void motorsInit(){
 motorRigth = new Motor();
 motorLeft = new Motor();
-motorRigth->setup(motorRigthPinIN, motorRigthPinPWM);
-motorLeft->setup(motorLeftPinIN, motorLeftPinPWM);
+motorRigth->setup(motorRigthPinA, motorRigthPinB, motorRigthPwmChannelA, motorRigthPwmChannelB);
+motorLeft->setup(motorLeftPinA, motorLeftPinB, motorLeftPwmChannelA, motorLeftPwmChannelB);
 }
+
 void motorSetSpeedLeft(int speed){
-    if (motorLeft != NULL) motorLeft->setSpeed(speed);
+    if (motorLeft != NULL) {
+        if(speed > 0) {
+            motorLeft->forward(speed);
+        } else {
+            motorLeft->reverse(speed *-1);
+        }
+    }
 }
+
 void motorSetSpeedRigth(int speed){
-    if (motorRigth != NULL) motorRigth->setSpeed(speed);
+    if (motorRigth != NULL) {
+        if(speed > 0) {
+            motorRigth->forward(speed);
+        } else {
+            motorRigth->reverse(speed *-1);
+        }
+    }
 }
+
 void motorsSetSpeed(int leftSpeed, int rightSpeed){
   motorSetSpeedLeft(leftSpeed);
   motorSetSpeedRigth(rightSpeed);
