@@ -6,6 +6,8 @@
 #define MOTOR_RAW_PWM  'o'
 #define RESET_ENCODERS 'r'
 #define PING           'p'
+#define UPDATE_PID     'u'
+#define GET_BAUDRATE   'b'
 
 #define LEFT            0
 #define RIGHT           1
