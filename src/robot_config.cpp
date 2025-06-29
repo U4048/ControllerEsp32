@@ -71,7 +71,7 @@ void motorSetSpeedRigth(int speed){
     }
 }
 
-void motorsSetSpeed(int leftSpeed, int rightSpeed){
+void motorsSetSpeed(int leftSpeed, int rightSpeed){ 
   motorSetSpeedLeft(leftSpeed);
   motorSetSpeedRigth(rightSpeed);
 }

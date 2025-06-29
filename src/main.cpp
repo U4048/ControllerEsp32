@@ -15,14 +15,21 @@ static bool ledState = false;
 int arg1 = 0;
 int arg2 = 0;
 
+#define RXD2 16
+#define TXD2 17
+
 
 
 void setup() {
+  Serial2.begin(BAUDRATE, SERIAL_8N1, RXD2, TXD2);
   Serial.begin(BAUDRATE);
   motorsInit();
   encodersInit();
   resetPID();
   pinMode(LED_BUILTIN, OUTPUT);
+   digitalWrite(LED_BUILTIN, HIGH);
+  delay(2000);
+  digitalWrite(LED_BUILTIN, LOW);
 }
 
 void runCommand(const char* buf){
@@ -33,20 +40,20 @@ void runCommand(const char* buf){
   //Serial.println(buf);
   switch (cmd) {
     case GET_BAUDRATE:
-      Serial.println(BAUDRATE);
+      Serial2.println(BAUDRATE);
     break;
     case PING: 
-      Serial.println(parser.getSub(1, CHAR_DIV).toInt16());
+      Serial2.println(parser.getSub(1, CHAR_DIV).toInt16());
       break;
     case READ_ENCODERS:
-      Serial.print(encoderReadLeft());
-      Serial.print(" ");
-      Serial.println(encoderReadRigth());
+      Serial2.print(encoderReadLeft());
+      Serial2.print(" ");
+      Serial2.println(encoderReadRigth());
     break;
    case RESET_ENCODERS:
       encodersReset();
       resetPID();
-      Serial.println("OK");
+      Serial2.println("OK");
     break;
     case MOTOR_SPEEDS:
     /* Reset the auto stop timer */
@@ -59,9 +66,13 @@ void runCommand(const char* buf){
       moving = 0;
     }
     else moving = 1;
+    Serial.print(arg1);
+    Serial.print(" ");
+    Serial.println(arg2);
+
     leftPID.TargetTicksPerFrame = arg1;
     rightPID.TargetTicksPerFrame = arg2;
-    Serial.println("OK"); 
+    Serial2.println("OK"); 
     break;
   case MOTOR_RAW_PWM:
     arg1 = parser.getSub(1, CHAR_DIV).toInt16();
@@ -71,17 +82,17 @@ void runCommand(const char* buf){
     resetPID();
     moving = 0; // Sneaky way to temporarily disable the PID
     motorsSetSpeed(arg1, arg2);
-    Serial.println("OK"); 
+    Serial2.println("OK"); 
     break;
   case UPDATE_PID:
     Kp = parser.getSub(1, CHAR_DIV).toInt16();
     Kd = parser.getSub(2, CHAR_DIV).toInt16();
     Ki = parser.getSub(3, CHAR_DIV).toInt16();
     Ko = parser.getSub(4, CHAR_DIV).toInt16();
-    Serial.println("OK");
+    Serial2.println("OK");
     break;  
   default:
-    Serial.println("Invalid Command");
+    //Serial2.println("Invalid Command");
     break;
   }
 }
@@ -94,8 +105,8 @@ void resetCommand() {
 
 void loop() {
   
-  if (Serial.available()>0) {
-    chr = Serial.read();
+  if (Serial2.available()>0) {
+    chr = Serial2.read();
     if (chr == 13){
       cmd[cmd_index]='\0';
       runCommand(cmd);
