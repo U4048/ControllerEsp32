@@ -58,8 +58,8 @@ void runCommand(const char* buf){
     case MOTOR_SPEEDS:
     /* Reset the auto stop timer */
     lastMotorCommand = millis();
-    arg1 = parser.getSub(1, CHAR_DIV).toInt16();
-    arg2 = parser.getSub(2, CHAR_DIV).toInt16();
+    arg1 = getRealPWM(parser.getSub(1, CHAR_DIV).toInt16());
+    arg2 = getRealPWM(parser.getSub(2, CHAR_DIV).toInt16());
     if (arg1 == 0 && arg2 == 0) {
       motorsSetSpeed(0,0);
       resetPID();
@@ -75,8 +75,8 @@ void runCommand(const char* buf){
     Serial2.println("OK"); 
     break;
   case MOTOR_RAW_PWM:
-    arg1 = parser.getSub(1, CHAR_DIV).toInt16();
-    arg2 = parser.getSub(2, CHAR_DIV).toInt16();
+    arg1 = getRealPWM(parser.getSub(1, CHAR_DIV).toInt16());
+    arg2 = getRealPWM(parser.getSub(2, CHAR_DIV).toInt16());
     /* Reset the auto stop timer */
     lastMotorCommand = millis();
     resetPID();
@@ -96,6 +96,7 @@ void runCommand(const char* buf){
     break;
   }
 }
+
 
 void resetCommand() {
   cmd_index = 0;

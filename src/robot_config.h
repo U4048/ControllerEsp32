@@ -24,6 +24,7 @@
 #define motorLeftPwmChannelB 3
 
 #define MAX_PWM 255
+#define MIN_PWM 80
 
 
 // проксирующие функции
@@ -38,6 +39,7 @@ void motorsInit();
 void motorSetSpeedLeft(int speed);
 void motorSetSpeedRigth(int speed);
 void motorsSetSpeed(int leftSpeed, int rightSpeed);
+int getRealPWM(int speed);
 
 
 #endif //ROBOT_CONFIGURE_H

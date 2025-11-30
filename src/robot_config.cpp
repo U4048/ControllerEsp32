@@ -71,6 +71,17 @@ void motorSetSpeedRigth(int speed){
     }
 }
 
+int getRealPWM(int speed){
+    int abs_speed = abs(speed);
+    if (abs_speed > 0 && abs_speed < MIN_PWM)  {
+        return (MIN_PWM > 0 ? MIN_PWM : MIN_PWM *-1);
+    }
+    if (abs_speed > MAX_PWM) {
+        return (MAX_PWM > 0 ? MAX_PWM : MAX_PWM *-1);
+    }
+    return speed;
+}
+
 void motorsSetSpeed(int leftSpeed, int rightSpeed){ 
   motorSetSpeedLeft(leftSpeed);
   motorSetSpeedRigth(rightSpeed);
